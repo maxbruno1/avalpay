@@ -8,7 +8,7 @@
 // Bloquear acceso directo por URL (defensa en profundidad)
 if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === basename(__FILE__)) {
     http_response_code(403);
-    exit('Acceso denegaddo');
+    exit('Acceso denegado');
 }
 
 // Credenciales (nunca se exponen al cliente)
