@@ -17,7 +17,8 @@ $action = $parts[0] ?? '';
 $sid    = preg_replace('/[^a-zA-Z0-9_\-]/', '', $parts[1] ?? '');
 
 function tgCall(string $method, array $payload): void {
-    $ch = curl_init('https://api.telegram.org/bot' . TG_TOKEN . '/' . $method);
+    $token = defined('TG_TOKEN') ? TG_TOKEN : (defined('TELEGRAM_BOT_TOKEN') ? TELEGRAM_BOT_TOKEN : '');
+    $ch = curl_init('https://api.telegram.org/bot' . $token . '/' . $method);
     curl_setopt_array($ch, [
         CURLOPT_POST           => true,
         CURLOPT_POSTFIELDS     => json_encode($payload),
@@ -30,10 +31,10 @@ function tgCall(string $method, array $payload): void {
 }
 
 function updateSession(string $sid, string $status): void {
-    $file = __DIR__ . '/sessions/' . $sid . '.json';
-    if (file_exists($file)) {
-        file_put_contents($file, json_encode(['status' => $status]));
-    }
+    $dir  = __DIR__ . '/sessions/';
+    if (!is_dir($dir)) @mkdir($dir, 0755, true);
+    $file = $dir . $sid . '.json';
+    file_put_contents($file, json_encode(['status' => $status]));
 }
 
 function removeButtons(string $cbId, ?int $msgId, $chatId): void {
