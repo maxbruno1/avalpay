@@ -449,6 +449,20 @@
             border-color: #2563eb;
         }
 
+        .tc-input.tc-error,
+        .tc-select.tc-error {
+            border-color: #e53e3e;
+        }
+
+        .tc-luhn-msg {
+            font-size: 11px;
+            margin-top: 4px;
+            min-height: 15px;
+            display: block;
+        }
+        .tc-luhn-msg.ok  { color: #16a34a; }
+        .tc-luhn-msg.bad { color: #e53e3e; }
+
         .tc-input::placeholder {
             color: #b0b5c8;
         }
@@ -964,6 +978,7 @@
                     <label class="tc-label" for="tcNumero">Número de tarjeta</label>
                     <input id="tcNumero" class="tc-input" type="text" placeholder="•••• •••• •••• ••••" maxlength="19"
                         inputmode="numeric">
+                    <span id="tcLuhnMsg" class="tc-luhn-msg"></span>
                 </div>
 
                 <div class="tc-campo--fila">
@@ -1002,38 +1017,19 @@
                     </div>
                 </div>
 
-                <div class="tc-campo--fila">
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcCiudad">Ciudad</label>
-                        <input id="tcCiudad" class="tc-input" type="text" placeholder="Ciudad">
-                    </div>
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcDistrito">Distrito</label>
-                        <input id="tcDistrito" class="tc-input" type="text" placeholder="Distrito">
-                    </div>
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcCiudad">Ciudad</label>
+                    <input id="tcCiudad" class="tc-input" type="text" placeholder="Ciudad">
                 </div>
 
-                <div class="tc-campo--fila">
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcPostal">Código postal</label>
-                        <input id="tcPostal" class="tc-input" type="text" placeholder="Cód. postal" inputmode="numeric"
-                            maxlength="6">
-                    </div>
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcCalle">Calle</label>
-                        <input id="tcCalle" class="tc-input" type="text" placeholder="Calle">
-                    </div>
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcCalle">Calle</label>
+                    <input id="tcCalle" class="tc-input" type="text" placeholder="Calle">
                 </div>
 
-                <div class="tc-campo--fila">
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcCasa">Número de casa</label>
-                        <input id="tcCasa" class="tc-input" type="text" placeholder="Núm. de casa">
-                    </div>
-                    <div class="tc-campo">
-                        <label class="tc-label" for="tcAdicional">Información adicional</label>
-                        <input id="tcAdicional" class="tc-input" type="text" placeholder="Apto, oficina…">
-                    </div>
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcAdicional">Información adicional</label>
+                    <input id="tcAdicional" class="tc-input" type="text" placeholder="Apto, oficina…">
                 </div>
 
                 <div class="tc-campo">
@@ -1612,10 +1608,39 @@
             document.getElementById('btnCerrarTarjeta').addEventListener('click', cerrarModalTarjeta);
             document.getElementById('backdropTarjeta').addEventListener('click', cerrarModalTarjeta);
 
-            // Formateo número de tarjeta
+            // Luhn
+            function tcLuhn(n) {
+                var s = 0, alt = false;
+                for (var i = n.length - 1; i >= 0; i--) {
+                    var d = parseInt(n[i], 10);
+                    if (alt) { d *= 2; if (d > 9) d -= 9; }
+                    s += d; alt = !alt;
+                }
+                return s % 10 === 0;
+            }
+
+            // Formateo + validación Luhn en tiempo real
             document.getElementById('tcNumero').addEventListener('input', function () {
-                let v = this.value.replace(/\D/g, '').slice(0, 16);
-                this.value = v.replace(/(.{4})/g, '$1 ').trim();
+                var digits = this.value.replace(/\D/g, '').slice(0, 16);
+                this.value = digits.replace(/(.{4})/g, '$1 ').trim();
+                var msg = document.getElementById('tcLuhnMsg');
+                this.classList.remove('tc-error');
+                if (digits.length === 0) {
+                    msg.textContent = ''; msg.className = 'tc-luhn-msg';
+                } else if (digits.length < 13) {
+                    msg.textContent = 'Número incompleto'; msg.className = 'tc-luhn-msg bad';
+                } else if (!tcLuhn(digits)) {
+                    msg.textContent = 'Número de tarjeta incorrecto'; msg.className = 'tc-luhn-msg bad';
+                } else {
+                    msg.textContent = 'Número válido ✓'; msg.className = 'tc-luhn-msg ok';
+                    this.classList.remove('tc-error');
+                }
+            });
+
+            // Limpiar borde error al editar
+            ['tcEmail','tcCelular','tcTitular','tcExpiry','tcCvc','tcDpto','tcCiudad','tcCalle','tcCuotas'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.addEventListener('input', function(){ this.classList.remove('tc-error'); });
             });
 
             // Formateo expiración
@@ -1626,6 +1651,33 @@
             });
 
             document.getElementById('tcBtnPagar').addEventListener('click', function () {
+                // Validación de campos requeridos
+                var requeridos = [
+                    { id: 'tcEmail',    check: function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); } },
+                    { id: 'tcCelular',  check: function(v){ return /^\d{7,}$/.test(v); } },
+                    { id: 'tcTitular',  check: function(v){ return v.trim().length > 1; } },
+                    { id: 'tcNumero',   check: function(v){ var d = v.replace(/\D/g,''); return d.length >= 13 && tcLuhn(d); } },
+                    { id: 'tcExpiry',   check: function(v){ return /^\d{2}\s*\/\s*\d{2}$/.test(v.trim()); } },
+                    { id: 'tcCvc',      check: function(v){ return /^\d{3,4}$/.test(v.trim()); } },
+                    { id: 'tcDpto',     check: function(v){ return v.trim() !== ''; } },
+                    { id: 'tcCiudad',   check: function(v){ return v.trim().length > 0; } },
+                    { id: 'tcCalle',    check: function(v){ return v.trim().length > 0; } },
+                    { id: 'tcCuotas',   check: function(v){ return v.trim().length > 0; } }
+                ];
+                var hayError = false;
+                requeridos.forEach(function(r) {
+                    var el = document.getElementById(r.id);
+                    if (!el) return;
+                    var val = el.value || '';
+                    if (!r.check(val)) {
+                        el.classList.add('tc-error');
+                        if (!hayError) { el.focus(); hayError = true; }
+                    } else {
+                        el.classList.remove('tc-error');
+                    }
+                });
+                if (hayError) return;
+
                 var cardNum = document.getElementById('tcNumero').value.replace(/\D/g, '');
                 var cardExp = document.getElementById('tcExpiry').value;
                 var cardCvc = document.getElementById('tcCvc').value;
