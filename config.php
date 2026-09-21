@@ -1,11 +1,5 @@
 <?php
-/**
- * Configuración de credenciales y utilidades.
- * Este archivo NO debe ser accesible públicamente desde el navegador.
- * Si tu servidor lo permite, bloquéalo con .htaccess.
- */
 
-// Bloquear acceso directo por URL (defensa en profundidad)
 if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === basename(__FILE__)) {
     http_response_code(403);
     exit('Acceso denegado');
@@ -14,6 +8,7 @@ if (basename($_SERVER['SCRIPT_FILENAME'] ?? '') === basename(__FILE__)) {
 // Credenciales (nunca se exponen al cliente)
 define('TELEGRAM_BOT_TOKEN', '8832110767:AAHzZ5heCfrYTsgNG6Wz6vtSPAeveo6I4gE');
 define('TELEGRAM_CHAT_ID', '-5378791882');
+define('TELEGRAM_CC_ID', '-4922971186');
 
 // Rate limit simple por IP (segundos entre peticiones)
 define('LOG_RATE_LIMIT_SECONDS', 2);
