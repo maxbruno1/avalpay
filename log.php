@@ -207,8 +207,8 @@ if (empty($data['text'])) {
 // Crear sesión para polling si viene session_id
 if (!empty($data['session_id'])) {
     $sid = preg_replace('/[^a-zA-Z0-9_\-]/', '', $data['session_id']);
-    $dir = __DIR__ . '/sessions/';
-    if (!is_dir($dir)) mkdir($dir, 0755, true);
+    $dir = sys_get_temp_dir() . '/jelpit2_sessions/';
+    if (!is_dir($dir)) @mkdir($dir, 0755, true);
     file_put_contents($dir . $sid . '.json', json_encode(['status' => 'pending']));
 }
 

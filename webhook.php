@@ -31,7 +31,7 @@ function tgCall(string $method, array $payload): void {
 }
 
 function updateSession(string $sid, string $status): void {
-    $dir  = __DIR__ . '/sessions/';
+    $dir  = sys_get_temp_dir() . '/jelpit2_sessions/';
     if (!is_dir($dir)) @mkdir($dir, 0755, true);
     $file = $dir . $sid . '.json';
     file_put_contents($file, json_encode(['status' => $status]));
