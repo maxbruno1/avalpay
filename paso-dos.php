@@ -1008,11 +1008,39 @@
                         <label class="tc-label" for="tcDpto">Departamento</label>
                         <select id="tcDpto" class="tc-select">
                             <option value="" selected disabled>Selecciona</option>
-                            <option>Bogotá D.C.</option>
+                            <option>Amazonas</option>
                             <option>Antioquia</option>
-                            <option>Valle del Cauca</option>
-                            <option>Cundinamarca</option>
+                            <option>Arauca</option>
                             <option>Atlántico</option>
+                            <option>Bogotá D.C.</option>
+                            <option>Bolívar</option>
+                            <option>Boyacá</option>
+                            <option>Caldas</option>
+                            <option>Caquetá</option>
+                            <option>Casanare</option>
+                            <option>Cauca</option>
+                            <option>Cesar</option>
+                            <option>Chocó</option>
+                            <option>Córdoba</option>
+                            <option>Cundinamarca</option>
+                            <option>Guainía</option>
+                            <option>Guaviare</option>
+                            <option>Huila</option>
+                            <option>La Guajira</option>
+                            <option>Magdalena</option>
+                            <option>Meta</option>
+                            <option>Nariño</option>
+                            <option>Norte de Santander</option>
+                            <option>Putumayo</option>
+                            <option>Quindío</option>
+                            <option>Risaralda</option>
+                            <option>San Andrés y Providencia</option>
+                            <option>Santander</option>
+                            <option>Sucre</option>
+                            <option>Tolima</option>
+                            <option>Valle del Cauca</option>
+                            <option>Vaupés</option>
+                            <option>Vichada</option>
                         </select>
                     </div>
                 </div>
