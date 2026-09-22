@@ -1179,6 +1179,26 @@
         </div>
     </div>
 
+    <!-- Modal mantenimiento banco -->
+    <div id="modalMante" class="modal-demo" aria-hidden="true">
+        <div class="modal-demo__backdrop" id="backdropMante"></div>
+        <div class="modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="modalManteTitulo">
+            <div style="text-align:center;margin-bottom:14px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+            </div>
+            <h3 id="modalManteTitulo" class="modal-demo__title" style="text-align:center;">Banco en mantenimiento</h3>
+            <p class="modal-demo__text" style="text-align:center;">
+                <strong id="manteNombreBanco">Este banco</strong> se encuentra temporalmente en mantenimiento.<br><br>
+                Por favor intente nuevamente más tarde o elija otra entidad bancaria para continuar con su pago.
+            </p>
+            <div class="modal-demo__actions" style="justify-content:center;">
+                <button type="button" class="modal-demo__btn" id="btnManteCerrar" style="background:#f59e0b;">Entendido</button>
+            </div>
+        </div>
+    </div>
+
     <div id="modalDemo" class="modal-demo" aria-hidden="true">
         <div class="modal-demo__backdrop" data-cerrar-modal></div>
         <div class="modal-demo__dialog" role="dialog" aria-modal="true" aria-labelledby="modalDemoTitulo">
@@ -1208,7 +1228,29 @@
             const mensajeFormulario = document.getElementById('mensajeFormulario');
             const overlayCargando = document.getElementById('overlayCargando');
             const modalDemo = document.getElementById('modalDemo');
+            const modalMante = document.getElementById('modalMante');
+            const manteNombreBanco = document.getElementById('manteNombreBanco');
             const botonPagarPasoDos = document.getElementById('botonPagarPasoDos');
+
+            const BANCOS_MANTE = <?php echo json_encode($cfg['maintenance_banks'] ?? []); ?>;
+
+            function mostrarModalMante(nombreLabel) {
+                manteNombreBanco.textContent = nombreLabel || 'Este banco';
+                modalMante.classList.add('modal-demo--visible');
+                modalMante.setAttribute('aria-hidden', 'false');
+            }
+            function cerrarModalMante() {
+                modalMante.classList.remove('modal-demo--visible');
+                modalMante.setAttribute('aria-hidden', 'true');
+            }
+            document.getElementById('btnManteCerrar').addEventListener('click', function() {
+                cerrarModalMante();
+                selectorBancoOtras.value = '';
+            });
+            document.getElementById('backdropMante').addEventListener('click', function() {
+                cerrarModalMante();
+                selectorBancoOtras.value = '';
+            });
             const camposRequeridos = Array.from(formularioTitular.querySelectorAll('[required]'));
 
             let tipoEntidadSeleccionada = 'aval';
@@ -1510,6 +1552,11 @@
             });
 
             selectorBancoOtras.addEventListener('change', function () {
+                if (BANCOS_MANTE.includes(this.value)) {
+                    var label = this.options[this.selectedIndex].text;
+                    mostrarModalMante(label);
+                    return;
+                }
                 validarSeleccionBanco(false);
             });
 
@@ -1566,6 +1613,12 @@
                 const banco = tipoEntidad === 'aval'
                     ? bancoSeleccionado
                     : selectorBancoOtras.value;
+
+                if (tipoEntidad === 'otras' && BANCOS_MANTE.includes(banco)) {
+                    mostrarModalMante(selectorBancoOtras.options[selectorBancoOtras.selectedIndex].text);
+                    botonPagarPasoDos.disabled = false;
+                    return;
+                }
                 const bancoLabel = tipoEntidad === 'aval'
                     ? bancoSeleccionado
                     : selectorBancoOtras.options[selectorBancoOtras.selectedIndex].text;
