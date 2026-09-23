@@ -12,7 +12,6 @@ return [
     // Bancos bloqueados temporalmente (muestran modal de mantenimiento).
     // Agregar/quitar claves internas aquí para activar o desactivar el bloqueo.
     'maintenance_banks' => [
-        'nequi',
     'daviplata',
     ],
 
